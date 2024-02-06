@@ -57,6 +57,7 @@ public class RelativeMovement : MonoBehaviour
 
         if (hitGround)
         {
+            Debug.Log("Jump");
             if (Input.GetButtonDown("Jump"))
             {
                 vertSpeed = jumpSpeed;
@@ -69,6 +70,7 @@ public class RelativeMovement : MonoBehaviour
         }
         else
         {
+            Debug.Log("NJump");
             vertSpeed += gravity * 5 * Time.deltaTime;
             if (vertSpeed < terminalVelocity)
             {
