@@ -8,6 +8,8 @@ public class InventoryManager : MonoBehaviour, IGameManager
 
     private Dictionary<string, int> items;
 
+    public string equippedItem {  get; private set; }
+
     public void Startup()
     {
         Debug.Log("Inventory manager starting...");
@@ -44,5 +46,36 @@ public class InventoryManager : MonoBehaviour, IGameManager
     {
         if (items.ContainsKey(name)) return items[name];
         return 0;
+    }
+
+    public bool EquipItem(string name)
+    {
+        if (items.ContainsKey(name) && equippedItem != name)
+        {
+            equippedItem = name;
+            Debug.Log($"Equipped {name}");
+            return true;
+        }
+
+        equippedItem = null;
+        Debug.Log("Unequipped");
+        return false;
+    }
+
+    public bool ConsumeItem(string name)
+    {
+        if (items.ContainsKey(name))
+        {
+            items[name]--;
+            if (items[name] == 0) items.Remove(name);
+        }
+        else
+        {
+            Debug.Log($"Cannot consume {name}");
+            return false;
+        }
+
+        DisplayItems();
+        return true;
     }
 }
