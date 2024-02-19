@@ -20,4 +20,22 @@ public class DoorOpenDevice : MonoBehaviour
         }
         open = !open;
     }
+
+    public void Activate()
+    {
+        if (!open)
+        {
+            iTween.MoveBy(gameObject, dPos, 1);
+            open = true;
+        }
+    }
+
+    public void Deactivate()
+    {
+        if (open)
+        {
+            iTween.MoveBy(gameObject, -dPos, 1);
+            open = false;
+        }
+    }
 }

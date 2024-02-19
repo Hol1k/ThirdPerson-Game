@@ -19,6 +19,7 @@ public class RelativeMovement : MonoBehaviour
 
     public float moveSpeed = 6f;
     public float rotSpeed = 12f;
+    public float pushForce = 3f;
 
     private float vertSpeed;
 
@@ -57,7 +58,6 @@ public class RelativeMovement : MonoBehaviour
 
         if (hitGround)
         {
-            Debug.Log("Jump");
             if (Input.GetButtonDown("Jump"))
             {
                 vertSpeed = jumpSpeed;
@@ -70,7 +70,6 @@ public class RelativeMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("NJump");
             vertSpeed += gravity * 5 * Time.deltaTime;
             if (vertSpeed < terminalVelocity)
             {
@@ -102,5 +101,11 @@ public class RelativeMovement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         contact = hit;
+
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body != null && !body.isKinematic)
+        {
+            body.velocity = hit.moveDirection * pushForce;
+        }
     }
 }
